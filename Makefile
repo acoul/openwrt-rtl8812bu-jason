@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=rtl88x2bu
+PKG_NAME:=rtl88x2bu-cil
 PKG_RELEASE=1
 
 PKG_LICENSE:=GPLv2
@@ -10,10 +10,10 @@ PKG_SOURCE_URL:=https://github.com/cilynx/rtl88x2bu.git
 
 PKG_MIRROR_HASH:=skip
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2020-07-20
-PKG_SOURCE_VERSION:=a2abcaf523dfab2afeda8cc2cdb5e3c9510fc5f3
+PKG_SOURCE_DATE:=2026-03-26
+PKG_SOURCE_VERSION:=8bb20daff07406ea6c1e63846a7959c1d72f53d8
 
-PKG_MAINTAINER:=Jason <nah@nah.nah>
+PKG_MAINTAINER:=Cilynx <cilynx@wolfteck.com>
 PKG_BUILD_PARALLEL:=1
 
 
@@ -22,17 +22,17 @@ STAMP_CONFIGURED_DEPENDS := $(STAGING_DIR)/usr/include/mac80211-backport/backpor
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/rtl88x2bu
+define KernelPackage/rtl88x2bu-cil
   SUBMENU:=Wireless Drivers
-  TITLE:=Driver for Realtek 88x2bu
+  TITLE:=Driver for Realtek 88x2bu by cilynx
   DEPENDS:=+kmod-cfg80211 +kmod-usb-core +@DRIVER_11N_SUPPORT +@DRIVER_11AC_SUPPORT
-  FILES:=\
-	$(PKG_BUILD_DIR)/88x2bu.ko
+  FILES:=$(PKG_BUILD_DIR)/88x2bu.ko
   AUTOLOAD:=$(call AutoProbe,88x2bu)
   PROVIDES:=kmod-88x2bu
 endef
 
 NOSTDINC_FLAGS = \
+	$(KERNEL_NOSTDINC_FLAGS) \
 	-I$(PKG_BUILD_DIR) \
 	-I$(PKG_BUILD_DIR)/include \
 	-I$(STAGING_DIR)/usr/include/mac80211-backport \
@@ -48,7 +48,8 @@ define Build/Compile
 		$(KERNEL_MAKE_FLAGS) \
 		M="$(PKG_BUILD_DIR)" \
 		NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" \
+		CONFIG_RTL8822BU=m \
 		modules
 endef
 
-$(eval $(call KernelPackage,rtl88x2bu))
+$(eval $(call KernelPackage,rtl88x2bu-cil))
