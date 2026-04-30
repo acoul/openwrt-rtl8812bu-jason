@@ -26,9 +26,9 @@ define KernelPackage/rtl88x2bu-cil
   SUBMENU:=Wireless Drivers
   TITLE:=Driver for Realtek 88x2bu by cilynx
   DEPENDS:=+kmod-cfg80211 +kmod-usb-core +@DRIVER_11N_SUPPORT +@DRIVER_11AC_SUPPORT
-  FILES:=$(PKG_BUILD_DIR)/88x2bu.ko
-  AUTOLOAD:=$(call AutoProbe,88x2bu)
-  PROVIDES:=kmod-88x2bu
+  FILES:=$(PKG_BUILD_DIR)/rtl88x2bu.ko
+  AUTOLOAD:=$(call AutoProbe,rtl88x2bu)
+  PROVIDES:=kmod-rtl88x2bu
 endef
 
 NOSTDINC_FLAGS = \
